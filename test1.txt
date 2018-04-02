@@ -1,0 +1,2 @@
+header goes here, can be whatever information you want, first line won't affect sequence
+TCAATGTAACGCGCTACCCGGAGCTCTGGGCCCAAATTTCATCCACT
