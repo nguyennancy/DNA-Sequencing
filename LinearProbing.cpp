@@ -44,11 +44,12 @@ void LinearHashTable::insert( const AAInfo & x )
 LinearHashTable::LinearHashTable(): size(23) // next prime number after 20
 {
   array = new AAInfo*[size];
+
   for(int i = 0; i < size; i++)
   {
     array[i] = new AAInfo(' ', "", "", 0.0, 0.0, 0.0);
     array[i]->ID = 0;
-  }
+  } // for
 } // LinearHashTable()
 
 
@@ -74,6 +75,7 @@ void LinearHashTable::create()
     nPka = stof(num);
     getline(inf, num, ',');
     hasR = stoi(num);
+
     if(hasR == 0)
     {
       rPka = 0.00;
@@ -129,6 +131,6 @@ void LinearHashTable::print() const
     << setw(6) << array[i]->letter << setw(6) << array[i]->threeLetter 
     << array[i]->cpKa << " " << array[i]->npKa << " " 
     << array[i]->rpKa << endl;
-  }
+  } // for
 } // print()
 

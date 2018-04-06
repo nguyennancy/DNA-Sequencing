@@ -187,7 +187,7 @@ void AminoAcid::caseU(const string &cdn, char &s)
 } // caseU()
 
 
-// for generating a DNA sequence based on user's amino acid sequence
+// for generating a random DNA sequence based on user's amino acid sequence
 // returns false if user enters in an invalid char; returns true otherwise
 bool AminoAcid::getTriplet(char symbol, string &t) const
 {
@@ -204,7 +204,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 2: t = "GCA"; return true;
         case 3: t = "GCG"; return true;
       }
-    } 
+    } // case A
     case 'R':
     {
       num = rand() % 6;
@@ -217,7 +217,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 4: t = "CGA"; return true;
         case 5: t = "CGG"; return true;
       }
-    }  
+    }  // case R
     case 'N':
     {
       num = rand() % 2;
@@ -226,7 +226,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "AAT"; return true;
         case 1: t = "AAC"; return true;
       }
-    }  
+    } // case N
     case 'D': 
     {
       num = rand() % 2;
@@ -235,7 +235,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "GAT"; return true;
         case 1: t = "GAC"; return true;
       }
-    } 
+    } // case D
     case 'C':
     {
       num = rand() % 2;
@@ -244,7 +244,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "TGT"; return true;
         case 1: t = "TGC"; return true;
       }
-    }  
+    } // case C
     case 'E':
     {
       num = rand() % 2;
@@ -253,7 +253,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "GAA"; return true;
         case 1: t = "GAG"; return true;
       }
-    }  
+    }  // case E
     case 'Q':
     {
       num = rand() % 2;
@@ -262,7 +262,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "CAA"; return true;
         case 1: t = "CAG"; return true;
       }
-    }  
+    } // case Q
     case 'G': 
     {
       num = rand() % 4;
@@ -273,7 +273,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 2: t = "GGA"; return true;
         case 3: t = "GGG"; return true;
       }
-    } 
+    } // case G
     case 'H': 
     {
       num = rand() % 2;
@@ -282,7 +282,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "CAT"; return true;
         case 1: t = "CAC"; return true;
       }
-    } 
+    } // case H
     case 'I': 
     {
       num = rand() % 3;
@@ -292,7 +292,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 1: t = "ATC"; return true;
         case 2: t = "ATA"; return true;
       }
-    } 
+    } // case I
     case 'L':
     {
       num = rand() % 6;
@@ -305,7 +305,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 4: t = "CTA"; return true;
         case 5: t = "CTG"; return true;
       }
-    }  
+    } // case L
     case 'K': 
     {
       num = rand() % 2;
@@ -314,7 +314,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "AAA"; return true;
         case 1: t = "AAG"; return true;
       }
-    } 
+    } // case K
     case 'M': t = "ATG"; return true;
     case 'F':
     {
@@ -324,7 +324,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "TTT"; return true;
         case 1: t = "TTC"; return true;
       }
-    }  
+    } // case F 
     case 'P': 
     {
       num = rand() % 4;
@@ -335,7 +335,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 2: t = "CCA"; return true;
         case 3: t = "CCG"; return true;
       }
-    } 
+    } // case P
     case 'S': 
     {
       num = rand() % 2;
@@ -344,7 +344,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "AGT"; return true;
         case 1: t = "AGC"; return true;
       }
-    } 
+    } // case S
     case 'T':
     {
       num = rand() % 4;
@@ -355,7 +355,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 2: t = "ACA"; return true;
         case 3: t = "ACG"; return true;
       }
-    }  
+    }  // case T
     case 'W': t = "TGG"; return true;
     case 'Y':
     {
@@ -365,7 +365,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 0: t = "TAT"; return true;
         case 1: t = "TAC"; return true;
       }
-    }  
+    }  // case Y
     case 'V': 
     {
       num = rand() % 4;
@@ -376,7 +376,7 @@ bool AminoAcid::getTriplet(char symbol, string &t) const
         case 2: t = "GTA"; return true;
         case 3: t = "GTG"; return true;
       }
-    } 
+    } // case V
   } // switch
 
   return false;

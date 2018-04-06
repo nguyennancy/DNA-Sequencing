@@ -10,7 +10,7 @@ void aminoAcidSeq(const Protein &protein);
 void calcMutationProb(const LinearHashTable &l, AminoAcidChain* chain);
 void findRepeatFrags(const Protein &protein);
 void generateSeqs();
-int getChoice();
+int getChoice(int max);
 void mRNASeq(const Protein &protein);
 void nucleotideSeq(const Protein &protein);
 void printStructuralFormMenu();
@@ -19,13 +19,16 @@ void printStructuralForms2(const Protein &protein, float pH);
 void returnLongestSequence(const Protein &protein);
 void structuralForm(Protein &protein);
 
+static string buffer; // used to clear cin's buffer
 
 int main(int argc, char** argv)
 {
   int choice = 0;
-  Protein protein;
-  LinearHashTable AAList;
-  AminoAcidChain* longestChain = NULL;
+  int maxChoice = 8; // maximum number choice user can enter/choose in menu
+
+  Protein protein; // contains all the possible reading frames given a sequence
+  LinearHashTable AAList; // contains all amino acid info; used as a reference
+  AminoAcidChain* longestChain = NULL; // longest viable gene found
   srand(time(NULL)); // for generating random numbers based on the time
 
   if(argv[1])
@@ -39,9 +42,21 @@ int main(int argc, char** argv)
   protein.genAminoAcidSequences(AAList);
   longestChain = &(protein.returnLongestChain());
 
+  // Main Menu
   do 
   {
-    choice = getChoice();
+    cout << endl << "DNA Sequence Manipulation and Analysis" << endl;
+    cout << "0. Quit" << endl;
+    cout << "1. View longest amino acid sequence obtained" << endl;
+    cout << "2. View nucleotide sequences" << endl;
+    cout << "3. View mRNA sequences" << endl;
+    cout << "4. View amino acid sequences" << endl;
+    cout << "5. View structural formula of amino acid sequence" << endl;
+    cout << "6. Calculate mutation probability" << endl;
+    cout << "7. Generate nucleotide sequences from an amino acid sequence" << endl;
+    cout << "8. Find repeat fragments in sequence" << endl << endl;
+    choice = getChoice(maxChoice);
+
     switch(choice)
     {
       case 1: returnLongestSequence(protein); break;
@@ -53,9 +68,9 @@ int main(int argc, char** argv)
       case 7: generateSeqs(); break;
       case 8: findRepeatFrags(protein); break;
     } // switch
+
   } while (choice > 0);
   
-
   return 0;
 } // main()
 
@@ -65,6 +80,7 @@ int main(int argc, char** argv)
 void aminoAcidSeq(const Protein &protein)
 {
   int usrChoice = 0;
+  int maxChoice = 4;
 
   do
   {
@@ -74,11 +90,7 @@ void aminoAcidSeq(const Protein &protein)
     cout << "2. View second reading frame amino acid sequence" << endl;
     cout << "3. View third reading frame amino acid sequence" << endl;
     cout << "4. View all amino acid sequences" << endl << endl;
-    cout << "Your Choice >> ";
-    cin >> usrChoice;
-    cout << endl;
-    cin.clear();
-    cin.ignore();
+    usrChoice = getChoice(maxChoice);
 
     switch(usrChoice)
     {
@@ -89,7 +101,7 @@ void aminoAcidSeq(const Protein &protein)
         cout << "Complementary amino acid strand:" << endl << endl;
         protein.chain1c.printAA();
         break;
-      } // case 1
+      } // reading frame 1
       case 2: 
       {
         cout << "Original amino acid strand:" << endl << endl;
@@ -97,7 +109,7 @@ void aminoAcidSeq(const Protein &protein)
         cout << "Complementary amino acid strand:" << endl << endl;
         protein.chain2c.printAA();
         break;
-      } // case 2
+      } // reading frame 2
       case 3: 
       {
         cout << "Original amino acid strand:" << endl << endl;
@@ -105,11 +117,12 @@ void aminoAcidSeq(const Protein &protein)
         cout << "Complementary amino acid strand:" << endl << endl;
         protein.chain3c.printAA();
         break;
-      } // case 3
-      case 4: protein.printAAs(); break;
+      } // reading frame 3
+      case 4: protein.printAAs(); // all reading frames
+              break; 
     } // switch
 
-  } while(usrChoice > 0);
+  } while(usrChoice != 0);
 
 } // aminoAcidSeq()
 
@@ -119,8 +132,9 @@ void aminoAcidSeq(const Protein &protein)
 // the number of times the sequence is mutated
 void calcMutationProb(const LinearHashTable &l, AminoAcidChain* chain )
 {
-  int usrPercentage = 0;
-  int usrNumMutations = 0; int numMutations = 0;
+  int usrPercentage = 0;   // percentage of how much to mutate the sequence
+  int usrNumMutations = 0; // how many mutated sequences to generate
+  int numMutations = 0;    // number of random sequences that have a mutation
   int mutationProb = 0;
 
   do
@@ -129,10 +143,10 @@ void calcMutationProb(const LinearHashTable &l, AminoAcidChain* chain )
     cin >> usrPercentage;
     cout << endl;
 
-    if(cin.fail() || usrPercentage >= 100 || usrPercentage <= 0)
+    if(!cin || usrPercentage >= 100 || usrPercentage <= 0)
     {
       cin.clear();
-      cin.ignore();
+      getline(cin, buffer); // removes rest of user's input
       usrPercentage = 0;
       cout << "Error. Please enter an integer between 0 and 100." 
            << endl << endl;
@@ -142,14 +156,16 @@ void calcMutationProb(const LinearHashTable &l, AminoAcidChain* chain )
 
   do
   {
-    cout << "Enter number of mutations to generate: ";
+    cout << "Enter number of mutations to generate (must be at least 100): ";
     cin >> usrNumMutations;
     cout << endl;
 
-    if(cin.fail() || usrNumMutations < 100)
+    // chose 100 to be the minimum of random sequences to be generated to get
+    // a better probability, but can change if necessary
+    if(!cin || usrNumMutations < 100)
     {
       cin.clear();
-      cin.ignore();
+      getline(cin, buffer); // removes rest of user's input
       usrNumMutations = 0;
       cout << "Error. Please enter an integer greater or equal to 100." 
            << endl << endl;
@@ -157,15 +173,14 @@ void calcMutationProb(const LinearHashTable &l, AminoAcidChain* chain )
 
   } while(usrNumMutations == 0);
 
-
+  // generates random sequences
   for(int count = 0; count < usrNumMutations; count++)
   {
     Sequence temp;
     string mutatedAASeq;
-    temp.genMutatedSeq(l, chain->sequence, usrPercentage, chain->metPos, 
-                       chain->stopPos);
-    mutatedAASeq = temp.genMutatedAminoAcidSeq(l);
 
+    temp.genMutatedSeq(l, chain->sequence, usrPercentage, chain->metPos, chain->stopPos);
+    mutatedAASeq = temp.genMutatedAminoAcidSeq(l);
     numMutations += temp.calcNumMutations(chain->aaSeq, mutatedAASeq);
   } // for each mutation count
 
@@ -209,7 +224,8 @@ void generateSeqs()
     {
       cout << "Error: At least one invalid character was detected. Please try again." << endl;
       return;
-    }    
+    } // else sequence is invalid
+
   } // for each amino acid in user's sequence
 
   switch(num)
@@ -224,29 +240,27 @@ void generateSeqs()
 } // generateSeqs()
 
 
-// Main Menu
-int getChoice()
+// reads input from user and validates it; max is the max number user can enter
+// as a valid choice
+int getChoice(int max)
 {
-  int usrChoice = 0;
+  int usrChoice;
+
   do
   {
-    cout << endl << "DNA Sequence Manipulation and Analysis" << endl;
-    cout << "0. Quit" << endl;
-    cout << "1. View longest amino acid sequence obtained" << endl;
-    cout << "2. View nucleotide sequences" << endl;
-    cout << "3. View mRNA sequences" << endl;
-    cout << "4. View amino acid sequences" << endl;
-    cout << "5. View structural formula of amino acid sequence" << endl;
-    cout << "6. Calculate mutation probability" << endl;
-    cout << "7. Generate nucleotide sequences from an amino acid sequence" << endl;
-    cout << "8. Find repeat fragments in sequence" << endl << endl;
     cout << "Your Choice >> ";
     cin >> usrChoice;
-    cout << endl;
-  } while(!(usrChoice >= 0));
 
-  cin.clear();
-  cin.ignore();
+    if(!cin)
+    {
+      cout << "\nPlease enter a valid number from 0 to " << max << ".";
+      cin.clear();
+      getline(cin, buffer); // removes rest of user's input
+      usrChoice = -1;       // to prompt menu again
+    } // if cin fails
+
+    cout << endl;
+  } while(usrChoice < 0 || usrChoice > max);
 
   return usrChoice;
 } // getChoice()
@@ -256,6 +270,7 @@ int getChoice()
 void mRNASeq(const Protein &protein)
 {
   int usrChoice = 0;
+  int maxChoice = 4;
 
   do
   {
@@ -265,11 +280,7 @@ void mRNASeq(const Protein &protein)
     cout << "2. View second reading frame mRNA sequence" << endl;
     cout << "3. View third reading frame mRNA sequence" << endl;
     cout << "4. View all mRNA sequences" << endl << endl;
-    cout << "Your Choice >> ";
-    cin >> usrChoice;
-    cout << endl;
-    cin.clear();
-    cin.ignore();
+    usrChoice = getChoice(maxChoice);
 
     switch(usrChoice)
     {
@@ -309,6 +320,7 @@ void mRNASeq(const Protein &protein)
 void nucleotideSeq(const Protein &protein)
 {
   int usrChoice = 0;
+  int maxChoice = 8;
 
   do
   {
@@ -322,12 +334,7 @@ void nucleotideSeq(const Protein &protein)
     cout << "6. View second reading frame cDNA nucleotide sequence" << endl;
     cout << "7. View third reading frame cDNA nucleotide sequence" << endl;
     cout << "8. View all cDNA nucleotide sequences" << endl << endl;
-    
-    cout << "Your Choice >> ";
-    cin >> usrChoice;
-    cout << endl;
-    cin.clear();
-    cin.ignore();
+    usrChoice = getChoice(maxChoice);
 
     switch(usrChoice)
     {
@@ -402,7 +409,6 @@ void printStructuralFormMenu()
   cout << "5. View original third reading frame amino acid structure" << endl;
   cout << "6. View complementary third reading frame amino acid structure" << endl;
   cout << "7. View all amino acid structures" << endl << endl;
-  cout << "Your Choice >> ";
 } // printStructuralFormMenu
 
 
@@ -417,6 +423,7 @@ void printStructuralForms1(const Protein &protein)
     printStructuralFormMenu();
     cin >> usrChoice;
     cout << endl;
+
     cin.clear();
     cin.ignore();
 
@@ -471,6 +478,7 @@ void printStructuralForms1(const Protein &protein)
 void printStructuralForms2(const Protein &protein, float pH)
 {
   int usrChoice = -1;
+  int maxChoice = 7; // from printStructuralFormMenu
 
   Structure structure1(238, 35); Structure structure1c(238, 35); // chain1 copy
   Structure structure2(238, 35); Structure structure2c(238, 35); // chain2 copy
@@ -485,10 +493,8 @@ void printStructuralForms2(const Protein &protein, float pH)
   do 
   {
     printStructuralFormMenu();
-    cin >> usrChoice;
-    cout << endl;
-    cin.clear();
-    cin.ignore();
+    usrChoice = getChoice(maxChoice);
+
     switch(usrChoice)
     {
       case 1: structure1.print(); break;
@@ -605,6 +611,7 @@ void returnLongestSequence(const Protein &protein)
 void structuralForm(Protein &protein)
 {
   int usrChoice = - 1; float pH = - 1;
+  int maxChoice = 2;
 
   do
   {
@@ -612,11 +619,7 @@ void structuralForm(Protein &protein)
     cout << "0. Go back to Main Menu" << endl;
     cout << "1. View structure(s) at pH 7.0" << endl;
     cout << "2. View structure(s) at a specific pH" << endl;
-    cout << "Your Choice >> ";
-    cin >> usrChoice;
-    cout << endl;
-    cin.clear();
-    cin.ignore();
+    usrChoice = getChoice(maxChoice);
 
     switch(usrChoice)
     {

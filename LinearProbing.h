@@ -12,12 +12,12 @@ class AAInfo
 {
 public:
   char letter; // one letter symbol
-  int ID; // for hashing / inserting
+  int ID;      // for hashing / inserting
   string threeLetter;
   string fullName;
-  float cpKa; // C-terminal pKa
-  float npKa; // T-terminal pKa
-  float rpKa; // R-group pKa (if R-group has no pKa, == 0)
+  float cpKa;  // C-terminal pKa
+  float npKa;  // T-terminal pKa
+  float rpKa;  // R-group pKa (if R-group has no pKa, == 0)
 
   AAInfo(char let, string threeLet, string fullNme, float cP, float tP, 
          float rP);

@@ -1,7 +1,6 @@
 #ifndef AMINOACID_H_
 #define AMINOACID_H_
 
-#include <string>
 #include "LinearProbing.h"
 
 using namespace std;
@@ -10,17 +9,17 @@ class AminoAcid
 {
   friend class LinearHashTable;
 
-  char symbol; // one letter symbol
+  char symbol;   // one letter symbol
   string abbrev; // 3 letter name
-  string full; // full name
-  float cpKa; // C-terminal pKa
-  float npKa; // N-terminal pKa
-  float rpKa; // R-group pKa (if R-group has no pKa, == 0)
+  string full;   // full name
+  float cpKa;    // C-terminal pKa
+  float npKa;    // N-terminal pKa
+  float rpKa;    // R-group pKa (if R-group has no pKa, == 0)
 
-  void caseU(const string &cdn, char &s);
-  void caseC(const string &cdn, char &s);
-  void caseA(const string &cdn, char &s);
-  void caseG(const string &cdn, char &s);
+  void caseU(const string &cdn, char &s); // Uracil
+  void caseC(const string &cdn, char &s); // Cysteine
+  void caseA(const string &cdn, char &s); // Alanine
+  void caseG(const string &cdn, char &s); // Guanine
 
 public:
   AminoAcid();

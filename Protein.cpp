@@ -44,18 +44,21 @@ void Protein::printAAs() const
   cout << "Reading frame 1" << endl;
   cout << "Original amino acid strand:" << endl << endl;
   chain1.printAA(); 
+  
   cout << "Complementary amino acid strand:" << endl << endl;
   chain1c.printAA();
 
   cout << endl << endl << "Reading frame 2" << endl;
   cout << "Original amino acid strand:" << endl << endl;
   chain2.printAA(); 
+
   cout << "Complementary amino acid strand:" << endl << endl;
   chain2c.printAA();
 
   cout << endl << endl << "Reading frame 3" << endl;
   cout << "Original amino acid strand:" << endl << endl;
   chain3.printAA(); 
+
   cout << "Complementary amino acid strand:" << endl << endl;
   chain3c.printAA();
 } // printAAs()
@@ -66,18 +69,21 @@ void Protein::printCDNAs() const
   cout << "Reading frame 1" << endl;
   cout << "Original cDNA strand:" << endl;
   chain1.printCDNA(); 
+
   cout << endl << "Complementary cDNA strand:" << endl;
   chain1c.printCDNA(); 
 
   cout << endl << endl << "Reading frame 2" << endl;
   cout << "Original cDNA strand:" << endl;
   chain2.printCDNA(); 
+
   cout << endl << "Complementary cDNA strand:" << endl;
   chain2c.printCDNA(); 
 
   cout << endl << endl << "Reading frame 3" << endl;
   cout << "Original cDNA strand:" << endl;
   chain3.printCDNA(); 
+
   cout << endl << "Complementary cDNA strand:" << endl;
   chain3c.printCDNA(); 
 
@@ -89,18 +95,21 @@ void Protein::printmRNAs() const
   cout << "Reading frame 1" << endl;
   cout << "Original mRNA strand:" << endl;
   chain1.printmRNA(); 
+
   cout << "Complementary mRNA strand:" << endl;
   chain1c.printmRNA();
 
   cout << endl << endl << "Reading frame 2" << endl;
   cout << "Original mRNA strand:" << endl;
   chain2.printmRNA(); 
+
   cout << "Complementary mRNA strand:" << endl;
   chain2c.printmRNA();
 
   cout << endl << endl << "Reading frame 3" << endl;
   cout << "Original mRNA strand:" << endl;
   chain3.printmRNA(); 
+
   cout << "Complementary mRNA strand:" << endl;
   chain3c.printmRNA();
 } // printmRNAs()
@@ -111,18 +120,21 @@ void Protein::printSeqs() const
   cout << "Reading frame 1" << endl;
   cout << "Original strand:" << endl;
   chain1.printSeq(); 
+
   cout << "Complementary strand:" << endl;
   chain1c.printSeq();
 
   cout << endl << endl << "Reading frame 2" << endl;
   cout << "Original strand:" << endl;
   chain2.printSeq(); 
+
   cout << "Complementary strand:" << endl;
   chain2c.printSeq();
 
   cout << endl << endl << "Reading frame 3" << endl;
   cout << "Original strand:" << endl;
   chain3.printSeq(); 
+
   cout << "Complementary strand:" << endl;
   chain3c.printSeq();
 } // printSeqs()
@@ -133,16 +145,21 @@ void Protein::printStructures() const
   cout << "Reading frame 1" << endl;
   cout << "Original amino acid strand:" << endl; 
   chain1.printStructure();
+
   cout << endl << "Complementary amino acid strand:" << endl;
   chain1c.printStructure();
+
   cout << endl << endl << "Reading frame 2" << endl;
   cout << "Original amino acid strand:" << endl; 
   chain2.printStructure();
+
   cout << endl << "Complementary amino acid strand:" << endl;
   chain2c.printStructure();
+
   cout << endl << endl << "Reading frame 3" << endl;
   cout << "Original amino acid strand:" << endl; 
   chain3.printStructure();
+
   cout << endl << "Complementary amino acid strand:" << endl;
   chain3c.printStructure();
 } // printStructures()
@@ -166,15 +183,17 @@ AminoAcidChain& Protein::returnLongestChain()
 
 } // returnLongestChain()
 
+
 // returns the index that will indicate which AminoAcidChain has the longest
 // chain
 int Protein::returnLongestChainNum() const
 {
   int array[6];
+
+  // assigning the chains with a specific number to distinguish them
   array[0] = chain1.aaLength; array[1] = chain1c.aaLength;
   array[2] = chain2.aaLength; array[3] = chain2c.aaLength;
   array[4] = chain3.aaLength; array[5] = chain3c.aaLength;
 
   return max_element(array, array + 6) - array;
-
 } // returnLongestChainNum()

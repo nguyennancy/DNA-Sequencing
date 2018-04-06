@@ -16,8 +16,8 @@ class Structure
   int curCol; // keeps track of where to insert next AA
 
   int index(int x, int y) const { return x + width * y; }
-  void createBackbone1();
-  void createBackbone2();
+  void createBackbone1(); // "R-group above" backbone
+  void createBackbone2(); // "R-group below" backbone
   void createA(int position);                       // Alanine
   void createR(int position, float pH, float rpKa); // Arginine
   void createN(int position);                       // Asparagine

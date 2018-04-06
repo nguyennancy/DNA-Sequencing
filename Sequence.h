@@ -1,7 +1,6 @@
 #ifndef SEQUENCE_H_
 #define SEQUENCE_H_
 
-#include <string>
 #include "LinearProbing.h"
 #include "AminoAcid.h"
 
@@ -11,10 +10,10 @@ class Sequence
 {
   friend class LinearHashTable;
 
-  string seq; // nucleotide sequence of given strand from 5' to 3'
+  string seq;     // nucleotide sequence of given strand from 5' to 3'
   string seqMRNA; // full mRNA generated from seq, including non-coding regions
-  string mRNA; // mRNA of coding region with polyATail
-  int seqLength; // length of full nucelotide sequence
+  string mRNA;    // mRNA of coding region with polyATail
+  int seqLength;  // length of full nucelotide sequence
 
   int compareThreeNums(int num1, int num2, int num3) const;
   int findFirstStopCodon(const string &s, size_t findStop, int offset) const;

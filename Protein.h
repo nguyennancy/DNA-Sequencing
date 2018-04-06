@@ -10,11 +10,11 @@ class Protein
 
 public:
   AminoAcidChain chain1;  // first reading frame
-  AminoAcidChain chain1c; // complementary of first reading frame seq
+  AminoAcidChain chain1c; // complementary strand first reading frame
   AminoAcidChain chain2;  // second reading frame; first letter will be truncated
-  AminoAcidChain chain2c;
+  AminoAcidChain chain2c; // complementary strand second reading frame
   AminoAcidChain chain3;  // third reading frame; first 2 letters will be truncated
-  AminoAcidChain chain3c; 
+  AminoAcidChain chain3c; // complementary strand third reading frame
 
   void genAminoAcidSequences(const LinearHashTable &AAList);
   void genOtherStrands();

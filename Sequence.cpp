@@ -2,60 +2,47 @@
 #include <iomanip> // for setw
 #include "Sequence.h"
 
+
 Sequence::Sequence(): seqLength(0)
 {} // Sequence()
+
 
 // compares 3 numbers and returns the smallest positive number
 // used to determine which stop codon is reached first to end gene
 int Sequence::compareThreeNums(int num1, int num2, int num3) const
 {
-  if(num1 == -1)
+  if(num1 == -1) // first stop codon isn't found
   {
-    if(num2 == -1)
+    if(num2 == -1) // second stop codon isn't found, return third stop codon
       return num3;
 
-    else if(num3 == -1)
+    else if(num3 == -1) // third stop codon isn't found, return sec stop codon
       return num2;
 
-    else // num2 and stop 3 are positive
+    else // second and third codons are found, return the smaller position
       return (num2 <= num3) ? num2 : num3;
   } // if num1 is negative
 
-  else if(num2 == -1)
+  else if(num2 == -1) // second stop codon isn't found, but first codon is found
   {
-    if(num1 == -1)
-      return num3;
-
-    else if(num3 == -1)
+    if(num3 == -1) // third codon isn't found, return first codon
       return num1;
 
-    else // num1 and num3 are positive
+    else // first and third stop codons are found, return the smaller position
       return (num1 <= num3) ? num1 : num3;
-  } // if num2 is negative 
+  } // else if num2 is negative 
 
-  else if(num3 == -1)
+  else if(num3 == -1) // third stop codon isn't found, but first and second are
   {
-    if(num1 == -1)
-      return num2;
-
-    else if(num2 == -1)
-      return num1;
-
-    else // num1 and num2 are both positive
-      return (num1 <= num2) ? num1 : num2;  
+    // first and second stop codons are found, return the smaller position
+    return (num1 <= num2) ? num1 : num2;  
   } // if num3 is negative
 
-  else // none are == -1
+  else // all stop codons have been found
   {
-    if(num1 <= num2 && num1 <= num3)
-      return num1;
-
-    else if(num2 <= num1 && num2 < num3)
-      return num2;
-
-    else // num3 <= num1 && num3 <= num2
-      return num3;
-  } // else all are positive
+    int min1or2 = (num1 <= num2) ? num1 : num2;
+    return (min1or2 <= num3) ? min1or2 : num3;
+  } // else all nums are positive
 
   return -1; // to quiet warnings
 } // compareThreeNums
@@ -87,7 +74,7 @@ int Sequence::findCodon(const string &s, const string &codon, size_t found, int 
 // returns the index of the first stop codon in the sequence s
 int Sequence::findFirstStopCodon(const string &s, size_t findStop, int offset) const
 {
-  int stop1 = -1, stop2 = -1, stop3 = -1;
+  int stop1 = -1, stop2 = -1, stop3 = -1; // initialize to -1 to distinguish
   size_t foundStop1 = findStop; 
   size_t foundStop2 = findStop; 
   size_t foundStop3 = findStop;
@@ -115,7 +102,7 @@ char Sequence::genRandomBase() const
     case 3: return 'T'; break;
   } // switch
 
-  return '!';
+  return '!'; // to quiet warnings
 } // genRandomBase()
 
 
@@ -150,8 +137,8 @@ void Sequence::findRepeats() const
 {
   
   vector<string> repeatFrags; // contains all the repeats
-  vector<int> fragCount; // will keep count of each valid repeat frag
-  vector<int> startIndex; // will keep count of the start location of each valid repeat
+  vector<int> fragCount;      // will keep count of each valid repeat frag
+  vector<int> startIndex;     // will keep count of the start location of each valid repeat
  
   cout << "Full sequence (Reading frame 1 original): " << seq << endl << endl;
   findSingleRepeats(repeatFrags, fragCount, startIndex);
@@ -166,7 +153,7 @@ void Sequence::findPairRepeats(vector<string> &repeats, vector<int> &counts,
                                  vector<int> &starts) const
 {
   int count = 0;
-  int prevJ = 0; // holds j's prev index in the case that end of the sequence has been reached
+  int prevJ = 0;   // holds j's prev index in the case that end of the sequence has been reached
   string pairFrags;
   string prevPair; // holds prev pairFrag in the case that end of the sequence has been reached
   
@@ -194,8 +181,10 @@ void Sequence::findPairRepeats(vector<string> &repeats, vector<int> &counts,
           
           if(j != 0)
             prevJ = j;
+
           if(pairFrags[i] != prevPair[0] && pairFrags[i+1] != prevPair[1])
             prevJ += 1;
+
           starts.push_back( prevJ - (count *  2) );
         } // if letter repeats 5 times or more consecutively
 
@@ -237,6 +226,7 @@ void Sequence::findSingleRepeats(vector<string> &repeats, vector<int> &counts,
           counts.push_back(count);
           starts.push_back(j - count);
         } // if letter repeats 5 times or more consecutively
+
         count = 0; // reset
       } // else
 
@@ -295,7 +285,7 @@ void Sequence::genMRNA(int aLength, int startPos, int stopPos)
 // time and space
 string Sequence::genMutatedAminoAcidSeq(const LinearHashTable &AALst)
 {
-  string aaSeq; // amino acid sequence of to-be-mutated seq
+  string aaSeq;   // amino acid sequence of to-be-mutated seq
   char symbl = '!';
   AminoAcid temp; // used to just access functions, poor practice though
   int start = 0; int stop = 0;
@@ -335,8 +325,11 @@ void Sequence::genMutatedSeq(const LinearHashTable &AALst, const Sequence &s,
   for(int count = 0; count < numBasesMutated; count++)
   {
     randomPos = rand() % stop; // generates random number 0 <= x < a.stopPos
-    while(randomPos < start + 3 || visited[randomPos] == true) // keep generating a new number if random number
-      randomPos = rand() % stop; // is < beginning position of cDNA (after M)
+
+    // keep generating a new number if random number is < beginning position 
+    // of cDNA (after M)
+    while(randomPos < start + 3 || visited[randomPos] == true) 
+      randomPos = rand() % stop;  
 
     mutatedBase = genRandomBase();
     seq[randomPos] = mutatedBase;
@@ -361,13 +354,13 @@ void Sequence::genReadingFrameSeqs(Sequence &s2, Sequence &s3) const
 
 
 // searches for the longest amino acid sequence that starts with a start codon and
-// ends in a stop codon; continues to search in current sequence even if a valid gene
-// with a start and stop codon have been found
+// ends in a stop codon; continues to search in current sequence even if a valid
+// gene with a start and stop codon have been found
 void Sequence::searchForLongestChain(const string &s, int &start, int &stop) const
 {
   int tempLength = 0; int tempLength2 = 0; // length between start and stop codons
-  int tempStart = 0; int tempStart2 = 0; // position of start codons
-  int tempStop = 0; int tempStop2 = 0; // position of stop codons
+  int tempStart = 0; int tempStart2 = 0;   // position of start codons
+  int tempStop = 0; int tempStop2 = 0;     // position of stop codons
   size_t foundStart = 0, foundStop = 0;
 
   tempStart = findCodon(s, "AUG", foundStart, 0);
@@ -385,7 +378,6 @@ void Sequence::searchForLongestChain(const string &s, int &start, int &stop) con
   {
     // start search for start codon after previous stop codon
     tempStart2 = findCodon(s, "AUG", foundStart, 1 + tempStart2);
-
     tempStop2 = findFirstStopCodon(s, foundStop, 1 + tempStop2);
 
     if(tempStart2 == -1 || tempStop2 == -1 || tempStop < tempStart)
@@ -444,6 +436,7 @@ istream& operator>> (istream &inf, Sequence &s)
   string buffer;
 
   getline(inf, buffer); // reads in the first line of the file
+
   while(getline(inf, buffer)) // read in AminoAcidChain until the end of file
     s.seq.append(buffer); 
 
@@ -457,11 +450,13 @@ void Sequence::printRepeats(vector<string> repeats, vector<int> counts,
                             vector<int> starts) const
 {
   int size = repeats.size();
+
   if(size == 0)
   {
-    cout << "No repeats of at least length 5 were found in sequence." << endl << endl;
+    cout << "No repeats of at least length 5 were found in sequence." 
+      << endl << endl;
     return;
-  }
+  } // if
 
   for(int i = 0; i < size; i++)
   {

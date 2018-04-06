@@ -1,10 +1,7 @@
 #ifndef AMINOACIDCHAIN_H_
 #define AMINOACIDCHAIN_H_
 
-#include <iostream>
 #include <cstdlib>
-#include <fstream>
-#include <string>
 #include <cmath>
 
 #include "LinearProbing.h"
@@ -19,12 +16,12 @@ class AminoAcidChain
   friend class LinearHashTable;
 
 public:
-  Sequence sequence; // contains DNA sequence + mRNA sequences
-  int metPos; // position in sequence at start codon
-  int stopPos; // position in sequence at stop codon
-  AminoAcid** AASeq; // amino acid sequence of given
-  string aaSeq; // string version of amino acid sequence
-  int aaLength; // length of amino acid sequence
+  Sequence sequence;    // contains DNA sequence + mRNA sequences
+  int metPos;           // position in sequence at start codon
+  int stopPos;          // position in sequence at stop codon
+  AminoAcid** AASeq;    // amino acid sequence of given
+  string aaSeq;         // string version of amino acid sequence
+  int aaLength;         // length of amino acid sequence
   Structure* structure; // structural formula of amino acid chain
 
   AminoAcidChain();
@@ -42,8 +39,6 @@ public:
   void printSeq() const;
   void printStructure() const;
   void setAAChainMembers();
-  
-  
 
 }; // class AminoAcidChain
 

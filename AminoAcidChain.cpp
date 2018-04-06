@@ -54,7 +54,6 @@ void AminoAcidChain::genReadingFrames(AminoAcidChain &c2, AminoAcidChain &c3) co
   sequence.genReadingFrameSeqs(c2.sequence, c3.sequence);
   c2.setAAChainMembers();
   c3.setAAChainMembers();
-  
 } // genReadingFrames()
 
 
