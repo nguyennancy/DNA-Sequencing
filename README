@@ -1,6 +1,6 @@
-============================================================================================================
+==================================================================================================
 DNA Sequence Manipulation and Analysis
-============================================================================================================
+==================================================================================================
 
 USAGE:
 Program executable is 'main.out'. main.out takes in exactly one argument, which is the file that contains the sequence of the amino acid to be analyzed:
@@ -9,7 +9,7 @@ Program executable is 'main.out'. main.out takes in exactly one argument, which 
 
 The file's contents must have a header on the first line, and the sequence to be analyzed on the second line. File test1.txt is provided as an example. Unfortunately, program is only coded to allow for sequences in all uppercase letters. 
 
-============================================================================================================
+==================================================================================================
 
 IMPORTANT NOTES:
 
@@ -25,7 +25,7 @@ IMPORTANT NOTES:
 
 - All functions are declared and organized in alphabetical order to allow the programmer to find a specific function quicker. Brief descriptions of each function (unless trivial/obvious) is given in the comments that precede the function in its respective .cpp file.
 
-============================================================================================================
+==================================================================================================
 
 Future Improvements:
 
