@@ -417,15 +417,12 @@ void printStructuralFormMenu()
 void printStructuralForms1(const Protein &protein)
 {
   int usrChoice = -1;
+  int maxChoice = 8;
 
   do
   {
     printStructuralFormMenu();
-    cin >> usrChoice;
-    cout << endl;
-
-    cin.clear();
-    cin.ignore();
+    usrChoice = getChoice(maxChoice);
 
     switch(usrChoice)
     {
