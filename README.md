@@ -1,4 +1,5 @@
 # DNA Sequence Manipulation and Analysis
+Given a DNA sequence, the program will determine the longest viable gene by checking all three reading frames of the coding strand (given strand) and the complementary strand (of the given strand). The program also outputs extra information based on the user's choice such as the mRNA sequence, the amino acid sequence, planar structural formula of the a
 
 ## Usage
 Program executable is 'main.out'. main.out takes in exactly one argument, which is the file that contains the sequence of the amino acid to be analyzed:
@@ -21,10 +22,17 @@ The file's contents must have a header on the first line, and the sequence to be
 * All functions are declared and organized in alphabetical order to allow the programmer to find a specific function quicker. Brief descriptions of each function (unless trivial/obvious) is given in the comments that precede the function in its respective .cpp file.
 
 ## Future Improvements
+### Code
 * Add throws/exceptions
 * Allow for chains longer than 18 amino acids by adding extra "boxes" and allowing the chain to wrap down
 * Adjust so that it doesn't print the "grid" for the structure when it's not a viable gene
 * Allow for uppercase and/or lowercase letters in the DNA sequence given in the file
+* Improve efficiency of mutation probability calculation
+
+### Extensions
+* Detect other types of repeats
+* Detect possible hairpin loops
+* Possibly identify if sequence is from prokaryotic or eukaryotic cell based on specific markers
 
 ## Authors
 Alissa Tran, Nancy Nguyen
