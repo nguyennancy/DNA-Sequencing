@@ -4,7 +4,7 @@
 // 1. midRow is approx. the middle row of the grid;
 // 2. order of atoms and bonds are by top-most row to bottom-most row, then
 //    left-most column to right-most column
-// 3. odd R group linear formula grouping is to help visualize it in grid
+// 3. "odd" R group linear formula grouping in comments is to help visualize it in grid
 
 
 Structure::Structure(int w, int h): width(w), height(h), midRow(16), curCol(0)
