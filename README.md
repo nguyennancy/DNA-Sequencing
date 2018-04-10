@@ -12,6 +12,8 @@ Given a DNA sequence, the program will determine the longest viable* gene by che
 * [Authors](#authors)
 
 # Main Menu Option Descriptions
+Extra descriptions/tips to help the user understand the different options
+
 ## 1. View longest amino acid sequence obtained
 * Nucleotide sequence --> starts from the start codon (Met) to the stop codon
 * Complementary sequence
