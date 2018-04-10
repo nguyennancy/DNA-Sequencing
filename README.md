@@ -1,14 +1,60 @@
 # DNA Sequence Manipulation and Analysis
-Given a DNA sequence, the program will determine the longest viable gene by checking all three reading frames of the coding strand (given strand) and the complementary strand (of the given strand). The program also outputs extra information based on the user's choice such as the mRNA sequence, the amino acid sequence, planar structural formula of the a
+Given a DNA sequence, the program will determine the longest viable* gene by checking all three reading frames of the coding strand (given strand) and the complementary strand (of the given strand). The program also outputs extra information based on the user's choice such as the mRNA sequence, the amino acid sequence, and planar structural formula of the amino acid chain.
 
-## Usage
+
+*viable meaning that a start codon is found and a stop codon is found after the start codon within the same reading frame
+
+# Table of Contents
+* [Main Menu Option Descriptions](#main-menu-option-descriptions)
+* [Usage](#usage)
+* [Important Notes](#important-notes)
+* [Future Improvements](#future-improvements)
+* [Authors](#authors)
+
+# Main Menu Option Descriptions
+## 1. View longest amino acid sequence obtained
+* Nucleotide sequence --> starts from the start codon (Met) to the stop codon
+* Complementary sequence
+* Amino Acid sequence
+* mRNA sequence --> attaches a polyA tail with random number of A's at the end of the sequence 
+
+## 2. View nucleotide sequences
+* Full nucleotide sequence --> outputs the full sequence of the reading frame chosen 
+* cDNA sequence --> outputs the sequence from the start codon to the first stop codon found in sequence (only if both are found)
+
+### 3. View mRNA sequences
+* mRNA sequences have a polyA tail added to the end
+* number of A's in the polyA tail are randomized
+
+## 4. View amino acid sequences
+* Amino acids are represented by their one-letter symbol
+* If no viable gene was found, the section will be empty
+* Length of the amino acid chain is also displayed
+
+## 5. View structural formula of amino acid sequence
+* Default structure is at pH 7.0
+* Acidic/Basic amino acids will vary in charges and their structure according to the pH chosen
+* Outputs planar structure with R groups alternating up and down (with the exception of Proline)
+
+## 6. Calculate mutation probability
+* Mutation percentage --> how much of the longest gene sequence the user wants to be randomly mutated
+* Number of mutations --> how many randomly mutated sequences to generate
+* Mutation probabilty --> probability of the sequence's amino acid sequence being mutated (change in one or more amino acids) given the total number of mutated sequences
+
+## 7. Generate nucleotide sequences from an amino acid sequence
+* Will return to Main Menu if user enters in invalid sequence
+
+## 8. Find repeat fragments in sequence
+* Finds single-letter or alternating-pair repeats of length at least 5 and gives the location of the beginning position of the repeat in the original sequence.
+
+# Usage
 Program executable is 'main.out'. main.out takes in exactly one argument, which is the file that contains the sequence of the amino acid to be analyzed:
 ```
 main.out [filename]
 ```
 The file's contents must have a header on the first line, and the sequence to be analyzed on the second line. File test1.txt is provided as an example. Unfortunately, program is only coded to allow for sequences in all uppercase letters. 
 
-## Important Notes
+# Important Notes
 * Need to have "AminoAcids.txt" in same folder as executable. The file contains the information that will be read in and stored into a Linear Probing Hash Table. The entries are references that will be used to create AminoAcids.
 
 * Structural form of an amino acid sequence is limited to about 18 amino acids, this approximation is based off of the width of the programmer's laptop screen. If a sequence that contains a gene that codes for more than ~18 amino acids, the structure won't be displayed properly due to the implementation of the structure.
@@ -21,18 +67,18 @@ The file's contents must have a header on the first line, and the sequence to be
 
 * All functions are declared and organized in alphabetical order to allow the programmer to find a specific function quicker. Brief descriptions of each function (unless trivial/obvious) is given in the comments that precede the function in its respective .cpp file.
 
-## Future Improvements
-### Code
+# Future Improvements
+## Code
 * Add throws/exceptions
 * Allow for chains longer than 18 amino acids by adding extra "boxes" and allowing the chain to wrap down
 * Adjust so that it doesn't print the "grid" for the structure when it's not a viable gene
 * Allow for uppercase and/or lowercase letters in the DNA sequence given in the file
 * Improve efficiency of mutation probability calculation
 
-### Extensions
+## Extensions
 * Detect other types of repeats
 * Detect possible hairpin loops
 * Possibly identify if sequence is from prokaryotic or eukaryotic cell based on specific markers
 
-## Authors
+# Authors
 Alissa Tran, Nancy Nguyen
